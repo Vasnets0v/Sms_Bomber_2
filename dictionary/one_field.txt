@@ -1,1 +1,2 @@
-https://www.facebook.com/login/identify/?ctx=recover&ars=facebook_login&from_login_screen=0 /html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/form/div/div[2]/div/table/tbody/tr[2]/td[2]/input
+https://account.kyivstar.ua/cas/login?service=https%3A%2F%2Faccount.kyivstar.ua%2Fcas6%2Flogin%3Fclient_name%3DCasClient29 /html/body/div[1]/main/article/article/section/section[2]/div/div/div[2]/input
+https://auth.uber.com/login/?breeze_local_zone=dca1&next_url=https%3A%2F%2Fm.uber.com%2F%3Fuclick_id%3D4bc8041d-605e-420a-9e37-9dcf83ff70a2&state=2j44JgJQ_5MhVQ7GOaCZgYVwE6Xc9HMwFaBcXyr0O68%3D&x-uber-analytics-session-id=0941f69c-5567-47ff-8572-b9e55249a30d /html/body/div[1]/div/div/div/div/div/div/div/div[2]/div/form/div[1]/div/div[1]/div/div[2]/input

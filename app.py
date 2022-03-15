@@ -10,16 +10,15 @@ pyfiglet.print_figlet("sms bomber 2")
 
 
 def collect_info():
-    init_info = {}
-    print("Enter phone number:")
-    init_info['phone_num'] = int(input())
-    print("Enter number of loops (loops mean how many sms will be sent from the same service)")
-    init_info['loops:'] = int(input())
+    init_info = {'phone_num': int(input('Enter phone number:')),
+                 'loops': int(input('Enter number of loops (loops mean how many sms w'
+                                    'ill be sent from the same service):'))}
+    print("Good, working!")
     return init_info
 
 
 def open_one_field_txt():
-    with open("dictionary/one_field.txt", 'r') as one_field:
+    with open("dictionary/raw_one_field.txt", 'r') as one_field:
         content = []
         for field in one_field:
             content.append({"url": field.split()[0], "xpath": field.split()[1]})
@@ -33,20 +32,27 @@ def render_one_field_page(phone_number, loops):
     content = open_one_field_txt()
 
     for i in range(loops):
-        # 'webdrivers' folder should contain the same chrome driver version as your chrome browser version on the system
-        service = Service(executable_path="webdrivers/chromedriver.exe")
-        browser = webdriver.Chrome(service=service)
 
         for item in content:
+            # 'webdrivers' folder should contain the same chrome driver version as your chrome browser version
+            service = Service(executable_path="webdrivers/chromedriver.exe")
+            browser = webdriver.Chrome(service=service)
+
             browser.get(item["url"])
             time.sleep(random.randint(2, 5))
             field_on_page = browser.find_element(By.XPATH, value=item['xpath'])
+            # sometime need to focus on element .click()
+            field_on_page.click()
             field_on_page.clear()
             field_on_page.send_keys(phone_number)
+            time.sleep(1)
             field_on_page.send_keys(Keys.ENTER)
             time.sleep(random.randint(2, 5))
+            input()
             browser.close()
             browser.quit()
+
+    print("Everything was done!")
 
 
 if __name__ == "__main__":
